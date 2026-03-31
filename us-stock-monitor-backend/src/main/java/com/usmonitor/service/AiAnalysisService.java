@@ -2,10 +2,9 @@ package com.usmonitor.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.usmonitor.ai.ClaudeClient;
+import com.usmonitor.ai.AiClient;
 import com.usmonitor.ai.PromptBuilder;
 import com.usmonitor.ai.dto.AnalysisResult;
-import com.usmonitor.config.ClaudeProperties;
 import com.usmonitor.domain.DailyAnalysis;
 import com.usmonitor.domain.Event;
 import com.usmonitor.domain.FundPosition;
@@ -27,14 +26,13 @@ public class AiAnalysisService {
 
     private static final String SYSTEM_JSON = "You reply with a single JSON object only. No markdown fences, no commentary.";
 
-    private final ClaudeClient claudeClient;
+    private final AiClient aiClient;
     private final PromptBuilder promptBuilder;
     private final ObjectMapper objectMapper;
-    private final ClaudeProperties claudeProperties;
 
     public Event verifyEvent(Event event) {
         String user = promptBuilder.buildVerificationPrompt(event);
-        String raw = claudeClient.chat(SYSTEM_JSON, user);
+        String raw = aiClient.chat(SYSTEM_JSON, user);
         if (!StringUtils.hasText(raw)) {
             applyVerificationDefaults(event);
             return event;
@@ -76,12 +74,12 @@ public class AiAnalysisService {
                 market,
                 analysisDate);
 
-        ClaudeClient.ClaudeChatResult result = claudeClient.chatWithMeta(SYSTEM_JSON, user);
+        AiClient.ChatResult result = aiClient.chatWithMeta(SYSTEM_JSON, user);
         String raw = result.text();
 
         DailyAnalysis d = new DailyAnalysis();
         d.setAnalysisDate(analysisDate);
-        d.setModelVersion(claudeProperties.getModel());
+        d.setModelVersion(aiClient.getModelName());
         d.setTokenCount(result.totalTokens());
         d.setGeneratedAt(LocalDateTime.now());
 
@@ -105,9 +103,8 @@ public class AiAnalysisService {
         }
 
         try {
-            List<Event> evs = events != null ? events : List.of();
             List<Long> ids = new ArrayList<>();
-            for (Event ev : evs) {
+            for (Event ev : events != null ? events : List.<Event>of()) {
                 if (ev.getId() != null) {
                     ids.add(ev.getId());
                 }
@@ -145,9 +142,8 @@ public class AiAnalysisService {
             d.setKeyRisks(objectMapper.writeValueAsString(List.of("Data unavailable — stub")));
             d.setKeyTailwinds(objectMapper.writeValueAsString(List.of()));
             d.setReportMarkdown("_(Analysis unavailable: model returned empty or invalid response.)_");
-            List<Event> evs = events != null ? events : List.of();
             List<Long> ids = new ArrayList<>();
-            for (Event ev : evs) {
+            for (Event ev : events != null ? events : List.<Event>of()) {
                 if (ev.getId() != null) {
                     ids.add(ev.getId());
                 }

@@ -29,7 +29,10 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: ${DB_PASSWORD:-root123}
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/us_monitor?useSSL=false&serverTimezone=UTC&characterEncoding=utf8mb4
+      AI_PROVIDER: ${AI_PROVIDER:-claude}
       CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     ports:
       - "8080:8080"
     depends_on:

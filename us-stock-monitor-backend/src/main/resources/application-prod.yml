@@ -45,4 +45,4 @@ app:
 logging:
   level:
     root: WARN
-    com.usmonitor: WARN
+    com.usmonitor: INFO

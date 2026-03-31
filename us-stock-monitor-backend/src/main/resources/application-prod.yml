@@ -8,7 +8,7 @@ spring:
       minimum-idle: 5
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     open-in-view: false
     properties:
@@ -36,6 +36,7 @@ app:
   cors:
     allowed-origins:
       - http://localhost:3000
+      - http://localhost
   crawler:
     user-agent: "Mozilla/5.0 (compatible; USMonitor/1.0)"
     timeout-ms: 10000

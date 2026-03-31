@@ -4,8 +4,7 @@ import type { AnalysisVO } from '@/types/analysis';
 import type { ApiResult, DashboardVO, PageResult } from '@/types/api';
 import type { EventVO } from '@/types/event';
 import type { FundPositionVO } from '@/types/fund';
-const baseURL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:8080';
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 
 export const apiClient = axios.create({
   baseURL,

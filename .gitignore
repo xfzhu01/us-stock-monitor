@@ -5,10 +5,12 @@
 node_modules/
 .next/
 
-# Java / Maven
-target/
+# Java / Gradle
+build/
+.gradle/
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # IDE
 .idea/

@@ -1,0 +1,66 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: us-monitor-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root123}
+      MYSQL_DATABASE: us_monitor
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./us-stock-monitor-backend
+      dockerfile: Dockerfile
+    container_name: us-monitor-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_USERNAME: root
+      DB_PASSWORD: ${DB_PASSWORD:-root123}
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/us_monitor?useSSL=false&serverTimezone=UTC&characterEncoding=utf8mb4
+      CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./us-stock-monitor-frontend
+      dockerfile: Dockerfile
+    container_name: us-monitor-frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${API_BASE_URL:-http://localhost:8080}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: us-monitor-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

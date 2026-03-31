@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 3 7 18;
+  --foreground: 243 244 246;
+  --card: 17 24 39;
+  --card-border: 31 41 55;
+  --muted: 156 163 175;
+  --accent: 99 102 241;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply min-h-screen bg-gray-950 text-gray-100 antialiased;
+  font-feature-settings: 'rlig' 1, 'calt' 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

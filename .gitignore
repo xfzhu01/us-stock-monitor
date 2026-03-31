@@ -1,0 +1,21 @@
+# Environment
+.env
+
+# Node.js
+node_modules/
+.next/
+
+# Java / Maven
+target/
+*.class
+*.jar
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Docker / local MySQL data
+mysql_data/

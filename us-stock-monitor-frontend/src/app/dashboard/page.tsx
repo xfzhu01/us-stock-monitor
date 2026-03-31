@@ -53,7 +53,7 @@ export default function DashboardPage() {
             <div className="grid gap-4 lg:grid-cols-6">
               <div className="lg:col-span-2">
                 {analysis ? (
-                  <SignalBadge signal={analysis.signal} className="h-full min-h-[160px]" />
+                  <SignalBadge trendSignal={analysis.trendSignal} className="h-full min-h-[160px]" />
                 ) : (
                   <div className="flex h-full min-h-[160px] items-center justify-center rounded-2xl border border-dashed border-gray-700 bg-gray-900/50 text-sm text-gray-500">
                     暂无分析信号

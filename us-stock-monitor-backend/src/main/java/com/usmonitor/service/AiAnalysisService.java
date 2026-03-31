@@ -93,7 +93,7 @@ public class AiAnalysisService {
             d.setSpxBullProb30d(ar.getSpxBullProb30d());
             d.setNdxBullProb7d(ar.getNdxBullProb7d());
             d.setNdxBullProb30d(ar.getNdxBullProb30d());
-            d.setSignal(ar.getSignal());
+            d.setTrendSignal(ar.getTrendSignal());
             d.setKeyRisks(objectMapper.writeValueAsString(ar.getKeyRisks() != null ? ar.getKeyRisks() : List.of()));
             d.setKeyTailwinds(objectMapper.writeValueAsString(ar.getKeyTailwinds() != null ? ar.getKeyTailwinds() : List.of()));
             d.setReportMarkdown(ar.getReport());
@@ -137,7 +137,7 @@ public class AiAnalysisService {
         d.setSpxBullProb30d(50);
         d.setNdxBullProb7d(50);
         d.setNdxBullProb30d(50);
-        d.setSignal("NEUTRAL");
+        d.setTrendSignal("NEUTRAL");
         try {
             d.setKeyRisks(objectMapper.writeValueAsString(List.of("Data unavailable — stub")));
             d.setKeyTailwinds(objectMapper.writeValueAsString(List.of()));

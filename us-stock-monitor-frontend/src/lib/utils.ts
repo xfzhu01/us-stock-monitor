@@ -21,12 +21,12 @@ export function formatDateTime(iso: string | Date) {
   return formatDateFns(d, 'yyyy-MM-dd HH:mm', { locale: zhCN });
 }
 
-export function getSignalColor(signal: AnalysisVO['signal']): string {
-  return SIGNALS[signal]?.textColor ?? 'text-gray-400';
+export function getSignalColor(trendSignal: AnalysisVO['trendSignal']): string {
+  return SIGNALS[trendSignal]?.textColor ?? 'text-gray-400';
 }
 
-export function getSignalLabel(signal: AnalysisVO['signal']): string {
-  return SIGNALS[signal]?.label ?? signal;
+export function getSignalLabel(trendSignal: AnalysisVO['trendSignal']): string {
+  return SIGNALS[trendSignal]?.label ?? trendSignal;
 }
 
 export function getCategoryLabel(category: string): string {

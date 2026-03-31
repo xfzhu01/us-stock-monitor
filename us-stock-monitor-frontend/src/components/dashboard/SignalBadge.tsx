@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { SIGNALS } from '@/lib/constants';
 import type { AnalysisVO } from '@/types/analysis';
 
-const signalEnglish: Record<AnalysisVO['signal'], string> = {
+const signalEnglish: Record<AnalysisVO['trendSignal'], string> = {
   strong_bull: 'Strong Bull',
   bull: 'Bullish',
   neutral: 'Neutral',
@@ -13,13 +13,13 @@ const signalEnglish: Record<AnalysisVO['signal'], string> = {
 };
 
 interface SignalBadgeProps {
-  signal: AnalysisVO['signal'];
+  trendSignal: AnalysisVO['trendSignal'];
   className?: string;
 }
 
-export function SignalBadge({ signal, className }: SignalBadgeProps) {
-  const cfg = SIGNALS[signal];
-  const strong = signal === 'strong_bull' || signal === 'strong_bear';
+export function SignalBadge({ trendSignal, className }: SignalBadgeProps) {
+  const cfg = SIGNALS[trendSignal];
+  const strong = trendSignal === 'strong_bull' || trendSignal === 'strong_bear';
 
   return (
     <div
@@ -33,7 +33,7 @@ export function SignalBadge({ signal, className }: SignalBadgeProps) {
         <div
           className={cn(
             'pointer-events-none absolute inset-0 opacity-20',
-            signal === 'strong_bull' ? 'bg-green-600' : 'bg-red-600'
+            trendSignal === 'strong_bull' ? 'bg-green-600' : 'bg-red-600'
           )}
         />
       ) : null}
@@ -41,7 +41,7 @@ export function SignalBadge({ signal, className }: SignalBadgeProps) {
       <p className={cn('mt-2 text-4xl font-bold tracking-tight', cfg.textColor)}>
         {cfg.label}
       </p>
-      <p className="mt-1 text-sm text-gray-500">{signalEnglish[signal]}</p>
+      <p className="mt-1 text-sm text-gray-500">{signalEnglish[trendSignal]}</p>
     </div>
   );
 }

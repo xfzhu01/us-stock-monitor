@@ -30,8 +30,8 @@ public class DailyAnalysis {
     @Column(name = "ndx_bull_prob_30d")
     private Integer ndxBullProb30d;
 
-    @Column(length = 15)
-    private String signal;
+    @Column(name = "trend_signal", length = 15)
+    private String trendSignal;
 
     @Column(name = "key_risks", columnDefinition = "TEXT")
     private String keyRisks;

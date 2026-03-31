@@ -39,7 +39,7 @@ public class PromptBuilder {
         sb.append(dateStr).append(".\n");
         sb.append("Respond with a single JSON object only (no markdown), keys:\n");
         sb.append("\"spxBullProb7d\", \"spxBullProb30d\", \"ndxBullProb7d\", \"ndxBullProb30d\" (integers 0-100),\n");
-        sb.append("\"signal\" (short string, max 15 chars),\n");
+        sb.append("\"trendSignal\" (short string, max 15 chars),\n");
         sb.append("\"keyRisks\" (array of short strings), \"keyTailwinds\" (array of short strings),\n");
         sb.append("\"report\" (markdown string, multi-paragraph outlook).\n\n");
         sb.append("## Market snapshot\n");

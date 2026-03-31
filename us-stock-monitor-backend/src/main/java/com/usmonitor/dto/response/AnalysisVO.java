@@ -21,7 +21,7 @@ public class AnalysisVO {
     private Integer spxBullProb30d;
     private Integer ndxBullProb7d;
     private Integer ndxBullProb30d;
-    private String signal;
+    private String trendSignal;
     private List<String> keyRisks;
     private List<String> keyTailwinds;
     private List<Long> eventIdsUsed;

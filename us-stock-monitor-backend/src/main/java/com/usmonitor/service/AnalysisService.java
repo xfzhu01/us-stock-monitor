@@ -79,7 +79,7 @@ public class AnalysisService {
                 .spxBullProb30d(d.getSpxBullProb30d())
                 .ndxBullProb7d(d.getNdxBullProb7d())
                 .ndxBullProb30d(d.getNdxBullProb30d())
-                .signal(d.getSignal())
+                .trendSignal(d.getTrendSignal())
                 .keyRisks(readStringList(d.getKeyRisks()))
                 .keyTailwinds(readStringList(d.getKeyTailwinds()))
                 .eventIdsUsed(readLongList(d.getEventIdsUsed()))
@@ -98,7 +98,7 @@ public class AnalysisService {
                 .spxBullProb30d(d.getSpxBullProb30d())
                 .ndxBullProb7d(d.getNdxBullProb7d())
                 .ndxBullProb30d(d.getNdxBullProb30d())
-                .signal(d.getSignal())
+                .trendSignal(d.getTrendSignal())
                 .build();
     }
 

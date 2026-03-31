@@ -51,7 +51,7 @@ CREATE TABLE daily_analysis (
     spx_bull_prob_30d   TINYINT UNSIGNED                        COMMENT 'SPX 30日看涨概率 0-100',
     ndx_bull_prob_7d    TINYINT UNSIGNED                        COMMENT 'NDX 7日看涨概率 0-100',
     ndx_bull_prob_30d   TINYINT UNSIGNED                        COMMENT 'NDX 30日看涨概率 0-100',
-    signal              VARCHAR(15)                             COMMENT '综合信号: strong_bull/bull/neutral/bear/strong_bear',
+    trend_signal        VARCHAR(15)                             COMMENT '综合信号: strong_bull/bull/neutral/bear/strong_bear',
     key_risks           JSON                                    COMMENT '主要风险列表',
     key_tailwinds       JSON                                    COMMENT '主要利好列表',
     event_ids_used      JSON                                    COMMENT '参与分析的事件ID列表',
@@ -62,7 +62,7 @@ CREATE TABLE daily_analysis (
     created_at          DATETIME        DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uk_analysis_date (analysis_date),
-    INDEX idx_signal (signal)
+    INDEX idx_trend_signal (trend_signal)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='每日AI趋势分析报告';
 
 CREATE TABLE market_data (

@@ -5,7 +5,7 @@ export interface AnalysisVO {
   spxBullProb30d: number;
   ndxBullProb7d: number;
   ndxBullProb30d: number;
-  signal: 'strong_bull' | 'bull' | 'neutral' | 'bear' | 'strong_bear';
+  trendSignal: 'strong_bull' | 'bull' | 'neutral' | 'bear' | 'strong_bear';
   keyRisks: string[];
   keyTailwinds: string[];
   eventIdsUsed: number[];

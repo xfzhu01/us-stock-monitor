@@ -107,11 +107,11 @@ export function AnalysisWorkspace({ date }: AnalysisWorkspaceProps) {
       <div className="min-w-0 flex-1 space-y-6">
         <div className="flex flex-wrap items-center gap-3">
           <span
-            className={`rounded-full px-3 py-1 text-xs font-medium text-white ${SIGNALS[analysis.signal].color}`}
+            className={`rounded-full px-3 py-1 text-xs font-medium text-white ${SIGNALS[analysis.trendSignal].color}`}
           >
-            {getSignalLabel(analysis.signal)}
+            {getSignalLabel(analysis.trendSignal)}
           </span>
-          <span className={cn('text-sm', getSignalColor(analysis.signal))}>
+          <span className={cn('text-sm', getSignalColor(analysis.trendSignal))}>
             模型 {analysis.modelVersion}
           </span>
           <span className="text-xs text-gray-500">

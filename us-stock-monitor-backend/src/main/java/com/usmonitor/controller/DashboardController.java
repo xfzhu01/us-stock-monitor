@@ -35,7 +35,7 @@ public class DashboardController {
                         .spxBullProb30d(vo.getSpxBullProb30d())
                         .ndxBullProb7d(vo.getNdxBullProb7d())
                         .ndxBullProb30d(vo.getNdxBullProb30d())
-                        .signal(vo.getSignal())
+                        .trendSignal(vo.getTrendSignal())
                         .build())
                 .toList();
 

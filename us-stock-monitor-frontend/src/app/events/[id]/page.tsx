@@ -54,7 +54,7 @@ export default function EventDetailPage() {
     );
   }
 
-  const sent = SENTIMENTS[event.sentiment];
+  const sent = event.sentiment ? SENTIMENTS[event.sentiment] : undefined;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -75,7 +75,7 @@ export default function EventDetailPage() {
               {getCategoryLabel(event.category)}
             </span>
             <span className="rounded bg-gray-800 px-2 py-0.5 text-xs text-gray-300">
-              {sent.label}
+              {sent?.label ?? event.sentiment ?? '未知'}
             </span>
             {event.isVerified ? (
               <span className="inline-flex items-center gap-1 text-xs text-indigo-400">
@@ -98,11 +98,11 @@ export default function EventDetailPage() {
             </div>
             <div>
               <dt className="text-gray-500">可信度</dt>
-              <dd className="text-gray-200">{event.credibilityScore}</dd>
+              <dd className="text-gray-200">{event.credibilityScore ?? '--'}</dd>
             </div>
             <div>
               <dt className="text-gray-500">影响力</dt>
-              <dd className="text-gray-200">{event.impactScore}</dd>
+              <dd className="text-gray-200">{event.impactScore ?? '--'}</dd>
             </div>
             <div className="sm:col-span-2">
               <dt className="text-gray-500">原文链接</dt>

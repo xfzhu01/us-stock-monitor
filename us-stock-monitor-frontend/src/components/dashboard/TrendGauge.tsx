@@ -68,8 +68,8 @@ function SemiGauge({ value, label }: SemiGaugeProps) {
 
 interface TrendGaugeProps {
   title: string;
-  prob7d: number;
-  prob30d: number;
+  prob7d: number | null | undefined;
+  prob30d: number | null | undefined;
   className?: string;
 }
 
@@ -83,8 +83,8 @@ export function TrendGauge({ title, prob7d, prob30d, className }: TrendGaugeProp
     >
       <p className="mb-4 text-center text-sm font-semibold text-gray-200">{title}</p>
       <div className="grid grid-cols-2 gap-2">
-        <SemiGauge value={prob7d} label="7日看涨概率" />
-        <SemiGauge value={prob30d} label="30日看涨概率" />
+        <SemiGauge value={prob7d ?? 0} label="7日看涨概率" />
+        <SemiGauge value={prob30d ?? 0} label="30日看涨概率" />
       </div>
     </div>
   );

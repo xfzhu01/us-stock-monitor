@@ -74,8 +74,11 @@ public class AiAnalysisService {
                 market,
                 analysisDate);
 
+        log.info("Generating daily analysis, events={}, fundPositions={}", 
+                events != null ? events.size() : 0, fundPositions != null ? fundPositions.size() : 0);
         AiClient.ChatResult result = aiClient.chatWithMeta(SYSTEM_JSON, user);
         String raw = result.text();
+        log.info("AI response length={}, tokens={}", raw != null ? raw.length() : 0, result.totalTokens());
 
         DailyAnalysis d = new DailyAnalysis();
         d.setAnalysisDate(analysisDate);
@@ -137,7 +140,7 @@ public class AiAnalysisService {
         d.setSpxBullProb30d(50);
         d.setNdxBullProb7d(50);
         d.setNdxBullProb30d(50);
-        d.setTrendSignal("NEUTRAL");
+        d.setTrendSignal("neutral");
         try {
             d.setKeyRisks(objectMapper.writeValueAsString(List.of("Data unavailable — stub")));
             d.setKeyTailwinds(objectMapper.writeValueAsString(List.of()));

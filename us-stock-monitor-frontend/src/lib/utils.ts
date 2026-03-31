@@ -51,10 +51,12 @@ export function getActionColor(action: FundPositionVO['action']): string {
   return ACTIONS[action]?.color ?? 'text-gray-400';
 }
 
-export function formatNumber(num: number): string {
+export function formatNumber(num: number | null | undefined): string {
+  if (num == null) return '--';
   return new Intl.NumberFormat('zh-CN').format(num);
 }
 
-export function formatPercent(pct: number, digits = 2): string {
+export function formatPercent(pct: number | null | undefined, digits = 2): string {
+  if (pct == null) return '--';
   return `${pct >= 0 ? '' : ''}${pct.toFixed(digits)}%`;
 }

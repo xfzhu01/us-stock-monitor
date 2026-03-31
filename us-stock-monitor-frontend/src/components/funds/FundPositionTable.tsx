@@ -81,7 +81,7 @@ export function FundPositionTable({ rows }: FundPositionTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-800">
           {sorted.map((row) => {
-            const act = ACTIONS[row.action];
+            const act = row.action ? ACTIONS[row.action] : undefined;
             return (
               <tr key={row.id} className="hover:bg-gray-800/50">
                 <td className="px-3 py-2.5 text-gray-200">{row.fundName}</td>
@@ -94,28 +94,28 @@ export function FundPositionTable({ rows }: FundPositionTableProps) {
                   <span
                     className={cn(
                       'rounded px-2 py-0.5 text-xs font-medium',
-                      act.bg,
-                      act.color
+                      act?.bg ?? 'bg-gray-700',
+                      act?.color ?? 'text-gray-400'
                     )}
                   >
-                    {act.label}
+                    {act?.label ?? row.action ?? '--'}
                   </span>
                 </td>
                 <td className="px-3 py-2.5 text-right font-mono text-gray-300">
-                  {formatNumber(row.sharesChange)}
+                  {row.sharesChange != null ? formatNumber(row.sharesChange) : '--'}
                 </td>
                 <td className="px-3 py-2.5 text-right font-mono text-gray-300">
-                  {formatNumber(row.sharesTotal)}
+                  {row.sharesTotal != null ? formatNumber(row.sharesTotal) : '--'}
                 </td>
                 <td className="px-3 py-2.5 text-right font-mono text-gray-200">
-                  ${formatNumber(Math.round(row.valueUsd))}
+                  ${row.valueUsd != null ? formatNumber(Math.round(row.valueUsd)) : '--'}
                 </td>
                 <td className="px-3 py-2.5 text-right text-gray-400">
-                  {row.portfolioPct.toFixed(2)}%
+                  {row.portfolioPct != null ? `${row.portfolioPct.toFixed(2)}%` : '--'}
                 </td>
                 <td className="px-3 py-2.5 text-gray-400">{row.quarter}</td>
                 <td className="px-3 py-2.5 text-gray-500">
-                  {formatDate(row.filingDate)}
+                  {row.filingDate ? formatDate(row.filingDate) : '--'}
                 </td>
               </tr>
             );

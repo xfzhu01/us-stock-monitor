@@ -2,8 +2,10 @@ package com.usmonitor.controller;
 
 import com.usmonitor.crawler.MarketDataCrawler;
 import com.usmonitor.crawler.NewsCrawlerService;
+import com.usmonitor.crawler.SecEdgarCrawler;
 import com.usmonitor.domain.CrawlLog;
 import com.usmonitor.domain.DailyAnalysis;
+import com.usmonitor.domain.FundPosition;
 import com.usmonitor.dto.response.ApiResult;
 import com.usmonitor.service.AiAnalysisService;
 import com.usmonitor.service.AnalysisService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -26,6 +29,7 @@ public class CrawlController {
 
     private final NewsCrawlerService newsCrawlerService;
     private final MarketDataCrawler marketDataCrawler;
+    private final SecEdgarCrawler secEdgarCrawler;
     private final MarketDataService marketDataService;
     private final EventService eventService;
     private final FundPositionService fundPositionService;
@@ -54,6 +58,26 @@ public class CrawlController {
         } catch (Exception e) {
             log.error("Market data crawl failed", e);
             return ApiResult.error(500, "Market data crawl failed: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/funds")
+    public ApiResult<Map<String, Object>> triggerFundCrawl() {
+        log.info("Manual trigger: fund position crawl (13F)");
+        try {
+            List<FundPosition> positions = secEdgarCrawler.fetchLatest13F();
+            int saved = 0;
+            if (!positions.isEmpty()) {
+                saved = fundPositionService.batchSave(positions).size();
+            }
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("status", "SUCCESS");
+            data.put("totalFetched", positions.size());
+            data.put("totalSaved", saved);
+            return ApiResult.success(data);
+        } catch (Exception e) {
+            log.error("Fund position crawl failed", e);
+            return ApiResult.error(500, "Fund crawl failed: " + e.getMessage());
         }
     }
 

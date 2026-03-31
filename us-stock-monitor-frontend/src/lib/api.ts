@@ -113,3 +113,18 @@ export async function fetchQuarterList(): Promise<string[]> {
   const { data } = await apiClient.get<string[]>('/api/v1/funds/quarters');
   return data as string[];
 }
+
+export async function triggerNewsCrawl(): Promise<Record<string, unknown>> {
+  const { data } = await apiClient.post<Record<string, unknown>>('/api/v1/crawl/news');
+  return data as Record<string, unknown>;
+}
+
+export async function triggerFundCrawl(): Promise<Record<string, unknown>> {
+  const { data } = await apiClient.post<Record<string, unknown>>('/api/v1/crawl/funds');
+  return data as Record<string, unknown>;
+}
+
+export async function triggerAnalysis(): Promise<string> {
+  const { data } = await apiClient.post<string>('/api/v1/crawl/analysis');
+  return data as string;
+}

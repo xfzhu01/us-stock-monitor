@@ -7,15 +7,16 @@ import { cn, formatNumber, formatPercent } from '@/lib/utils';
 interface MarketSnapshotProps {
   name: string;
   subtitle?: string;
-  value: number;
-  changePct: number;
+  value: number | null | undefined;
+  changePct: number | null | undefined;
   format?: 'price' | 'yield' | 'index';
 }
 
 function formatValue(
-  v: number,
+  v: number | null | undefined,
   kind: MarketSnapshotProps['format']
 ): string {
+  if (v == null) return '--';
   if (kind === 'yield') return `${v.toFixed(2)}%`;
   if (kind === 'index') return formatNumber(Math.round(v * 100) / 100);
   return formatNumber(Math.round(v * 100) / 100);
@@ -28,8 +29,9 @@ export function MarketSnapshot({
   changePct,
   format = 'price',
 }: MarketSnapshotProps) {
-  const up = changePct > 0;
-  const flat = changePct === 0;
+  const pct = changePct ?? 0;
+  const up = pct > 0;
+  const flat = pct === 0;
 
   return (
     <div className="rounded-xl border border-gray-800 bg-gray-900/90 p-4 shadow-lg transition hover:border-gray-700">
@@ -57,7 +59,7 @@ export function MarketSnapshot({
         ) : (
           <ArrowDownRight className="h-4 w-4" aria-hidden />
         )}
-        <span>{formatPercent(changePct)}</span>
+        <span>{formatPercent(pct)}</span>
       </div>
     </div>
   );

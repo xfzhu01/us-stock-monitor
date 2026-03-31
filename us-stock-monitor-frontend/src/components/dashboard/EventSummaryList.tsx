@@ -44,7 +44,7 @@ export function EventSummaryList({ events }: EventSummaryListProps) {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-gray-100">{e.title}</p>
                 <div className="mt-1 flex items-center gap-3 text-xs text-gray-500">
-                  <span>影响 {e.impactScore}</span>
+                  <span>影响 {e.impactScore ?? '--'}</span>
                   <span
                     className={`inline-block h-2 w-2 rounded-full ${sentimentDot(e.sentiment)}`}
                     title={e.sentiment}

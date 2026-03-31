@@ -12,7 +12,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event }: EventCardProps) {
-  const sent = SENTIMENTS[event.sentiment];
+  const sent = event.sentiment ? SENTIMENTS[event.sentiment] : undefined;
 
   return (
     <Link
@@ -30,10 +30,10 @@ export function EventCard({ event }: EventCardProps) {
             'rounded px-2 py-0.5 text-xs font-medium',
             event.sentiment === 'BULLISH' && 'bg-green-500/20 text-green-400',
             event.sentiment === 'BEARISH' && 'bg-red-500/20 text-red-400',
-            event.sentiment === 'NEUTRAL' && 'bg-gray-700 text-gray-300'
+            (!event.sentiment || event.sentiment === 'NEUTRAL') && 'bg-gray-700 text-gray-300'
           )}
         >
-          {sent.label}
+          {sent?.label ?? '未知'}
         </span>
         {event.isVerified ? (
           <span className="inline-flex items-center gap-1 text-xs text-indigo-400">
@@ -52,20 +52,20 @@ export function EventCard({ event }: EventCardProps) {
           <div className="mt-1 h-2 overflow-hidden rounded-full bg-gray-800">
             <div
               className="h-full rounded-full bg-indigo-500"
-              style={{ width: `${event.credibilityScore}%` }}
+              style={{ width: `${event.credibilityScore ?? 0}%` }}
             />
           </div>
-          <p className="mt-0.5 text-xs text-gray-400">{event.credibilityScore}</p>
+          <p className="mt-0.5 text-xs text-gray-400">{event.credibilityScore ?? '--'}</p>
         </div>
         <div>
           <p className="text-[10px] uppercase text-gray-500">影响力</p>
           <div className="mt-1 h-2 overflow-hidden rounded-full bg-gray-800">
             <div
               className="h-full rounded-full bg-amber-500"
-              style={{ width: `${event.impactScore}%` }}
+              style={{ width: `${event.impactScore ?? 0}%` }}
             />
           </div>
-          <p className="mt-0.5 text-xs text-gray-400">{event.impactScore}</p>
+          <p className="mt-0.5 text-xs text-gray-400">{event.impactScore ?? '--'}</p>
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between text-xs text-gray-500">

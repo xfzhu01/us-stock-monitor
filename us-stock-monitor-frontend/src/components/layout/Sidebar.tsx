@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Menu,
   Newspaper,
+  Settings2,
   TrendingUp,
   X,
 } from 'lucide-react';
@@ -20,6 +21,7 @@ const nav = [
   { href: '/events', label: '事件监控', icon: Newspaper },
   { href: '/analysis', label: '趋势分析', icon: TrendingUp },
   { href: '/funds', label: '基金动向', icon: Landmark },
+  { href: '/control', label: '控制面板', icon: Settings2 },
 ];
 
 export function Sidebar() {

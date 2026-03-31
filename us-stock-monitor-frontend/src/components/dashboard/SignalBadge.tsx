@@ -38,10 +38,10 @@ export function SignalBadge({ trendSignal, className }: SignalBadgeProps) {
         />
       ) : null}
       <p className="text-sm font-medium text-gray-400">市场信号</p>
-      <p className={cn('mt-2 text-4xl font-bold tracking-tight', cfg.textColor)}>
-        {cfg.label}
+      <p className={cn('mt-2 text-4xl font-bold tracking-tight', cfg?.textColor ?? 'text-gray-400')}>
+        {cfg?.label ?? trendSignal ?? '未知'}
       </p>
-      <p className="mt-1 text-sm text-gray-500">{signalEnglish[trendSignal]}</p>
+      <p className="mt-1 text-sm text-gray-500">{signalEnglish[trendSignal] ?? ''}</p>
     </div>
   );
 }

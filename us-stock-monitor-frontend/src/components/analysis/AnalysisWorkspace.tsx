@@ -107,7 +107,7 @@ export function AnalysisWorkspace({ date }: AnalysisWorkspaceProps) {
       <div className="min-w-0 flex-1 space-y-6">
         <div className="flex flex-wrap items-center gap-3">
           <span
-            className={`rounded-full px-3 py-1 text-xs font-medium text-white ${SIGNALS[analysis.trendSignal].color}`}
+            className={`rounded-full px-3 py-1 text-xs font-medium text-white ${SIGNALS[analysis.trendSignal]?.color ?? 'bg-gray-500'}`}
           >
             {getSignalLabel(analysis.trendSignal)}
           </span>
@@ -127,7 +127,7 @@ export function AnalysisWorkspace({ date }: AnalysisWorkspaceProps) {
             >
               <p className="text-xs text-gray-500">{c.label}</p>
               <p className={cn('mt-2 text-3xl font-bold tabular-nums', c.tone)}>
-                {Math.round(c.value)}
+                {c.value != null ? Math.round(c.value) : '--'}
                 <span className="text-lg font-normal text-gray-500">%</span>
               </p>
             </div>

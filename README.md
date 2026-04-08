@@ -11,6 +11,7 @@
 | ORM | Spring Data JPA + Hibernate (ddl-auto: update) |
 | 数据库 | MySQL 8.0 |
 | AI 接口 | Claude / ChatGPT / Gemini（可配置切换） |
+| 行情数据 | Finnhub API（免费版，ETF 代理） |
 | 前端框架 | Next.js 14 + TypeScript |
 | 样式 | TailwindCSS v3 |
 | 图表 | Recharts |
@@ -41,7 +42,7 @@ docker compose up -d
 ### 数据采集
 - **新闻事件抓取**：从 CNBC、Reuters、MarketWatch 等 RSS 源自动抓取财经新闻
 - **基金持仓变动**：采集顶级基金（Berkshire Hathaway、ARK Invest、Bridgewater、Soros 等）的 13F 持仓变动数据
-- **市场行情快照**：SPX、NDX、VIX、美债收益率、美元指数等
+- **市场行情快照**：通过 Finnhub API 实时获取，使用 ETF 代理（SPY→S&P 500、QQQ→纳斯达克 100、VIXY→VIX、TLT→美国 10Y 国债、UUP→美元指数），每 60 秒自动刷新
 
 ### AI 分析
 - 自动对抓取的事件进行可信度评分、影响力评分和情绪标注
@@ -95,10 +96,15 @@ cd us-stock-monitor-frontend
 
 npm install
 
+# 创建 .env.local 配置 Finnhub API Key
+echo 'FINNHUB_API_KEY=your_finnhub_api_key' > .env.local
+
 # 本地开发需指向后端地址
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080 npm run dev
 # 访问 http://localhost:3000
 ```
+
+> Finnhub API Key 可在 [finnhub.io](https://finnhub.io/) 免费注册获取。
 
 > Docker 部署时前端默认使用相对路径，通过 Nginx 反向代理访问后端，无需配置 `NEXT_PUBLIC_API_BASE_URL`。
 
@@ -119,6 +125,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8080 npm run dev
 | 变量名 | 说明 | 必填 |
 |--------|------|------|
 | `DB_PASSWORD` | MySQL 密码 | 是 |
+| `FINNHUB_API_KEY` | Finnhub 行情 API Key（[免费注册](https://finnhub.io/)） | 是 |
 | `AI_PROVIDER` | AI 模型提供商（claude/openai/gemini） | 否（默认 claude） |
 | `CLAUDE_API_KEY` | Anthropic API Key | 使用 Claude 时必填 |
 | `OPENAI_API_KEY` | OpenAI API Key | 使用 ChatGPT 时必填 |

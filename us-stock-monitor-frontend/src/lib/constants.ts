@@ -23,8 +23,8 @@ export const SENTIMENTS = {
 };
 
 export const ACTIONS = {
-  NEW: { label: '新建仓', color: 'text-green-600', bg: 'bg-green-100' },
-  ADD: { label: '加仓', color: 'text-green-500', bg: 'bg-green-50' },
-  REDUCE: { label: '减仓', color: 'text-red-400', bg: 'bg-red-50' },
-  CLOSE: { label: '清仓', color: 'text-red-600', bg: 'bg-red-100' },
+  NEW: { label: '新建仓', color: 'text-green-400', bg: 'bg-green-500/20' },
+  ADD: { label: '加仓', color: 'text-green-400', bg: 'bg-green-500/20' },
+  REDUCE: { label: '减仓', color: 'text-red-400', bg: 'bg-red-500/20' },
+  CLOSE: { label: '清仓', color: 'text-red-500', bg: 'bg-red-500/30' },
 };

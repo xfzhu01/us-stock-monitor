@@ -68,9 +68,14 @@ public class RssFeedCrawler {
 
     public static List<String> defaultFeedUrls() {
         return List.of(
-                "https://feeds.reuters.com/reuters/businessNews",
+                "https://www.reutersagency.com/feed/?best-topics=business&post_type=best",
                 "https://www.cnbc.com/id/100003114/device/rss/rss.html",
-                "https://feeds.marketwatch.com/marketwatch/topstories/"
+                "https://feeds.marketwatch.com/marketwatch/topstories/",
+                "https://finance.yahoo.com/rss/",
+                "https://seekingalpha.com/market_currents.xml",
+                "https://www.investing.com/rss/news_25.rss",
+                "https://www.ft.com/news-feed?format=rss",
+                "https://www.wsj.com/xml/rss/3_7014.xml"
         );
     }
 

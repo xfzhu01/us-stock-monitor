@@ -48,6 +48,10 @@ public class Event {
     @Column(length = 10)
     private String sentiment;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String sources;
+
     @Column(name = "is_verified", nullable = false)
     private Boolean isVerified = false;
 

@@ -5,6 +5,7 @@ import com.usmonitor.ai.AiClient;
 import com.usmonitor.ai.ClaudeClient;
 import com.usmonitor.ai.GeminiClient;
 import com.usmonitor.ai.OpenAiClient;
+import com.usmonitor.ai.OpenRouterClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ public class AiClientConfig {
         AiClient client = switch (provider) {
             case "openai", "chatgpt" -> new OpenAiClient(aiProperties, objectMapper, webClientBuilder);
             case "gemini", "google" -> new GeminiClient(aiProperties, objectMapper, webClientBuilder);
+            case "openrouter" -> new OpenRouterClient(aiProperties, objectMapper, webClientBuilder);
             default -> new ClaudeClient(aiProperties, objectMapper, webClientBuilder);
         };
         log.info("AI provider configured: {} (model: {})", provider, client.getModelName());

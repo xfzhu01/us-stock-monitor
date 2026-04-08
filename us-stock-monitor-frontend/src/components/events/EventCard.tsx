@@ -33,7 +33,7 @@ export function EventCard({ event }: EventCardProps) {
             (!event.sentiment || event.sentiment === 'NEUTRAL') && 'bg-gray-700 text-gray-300'
           )}
         >
-          {sent?.label ?? '未知'}
+          {sent?.label ?? (event.isVerified ? '中性' : '分析中')}
         </span>
         {event.isVerified ? (
           <span className="inline-flex items-center gap-1 text-xs text-indigo-400">
@@ -69,7 +69,13 @@ export function EventCard({ event }: EventCardProps) {
         </div>
       </div>
       <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-        <span>{event.sourceName}</span>
+        <span>
+          {event.sources && event.sources.length > 0
+            ? event.sources.length > 1
+              ? `多信源 (${event.sources.length})`
+              : event.sources[0].name
+            : (event.sourceName || '未知来源')}
+        </span>
         <span>{formatDate(event.eventDate)}</span>
       </div>
     </Link>

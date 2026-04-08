@@ -15,6 +15,7 @@ public class AiProperties {
 
     private Claude claude = new Claude();
     private OpenAi openai = new OpenAi();
+    private OpenRouter openrouter = new OpenRouter();
     private Gemini gemini = new Gemini();
 
     @Data
@@ -29,6 +30,13 @@ public class AiProperties {
         private String apiKey = "";
         private String apiUrl = "https://api.openai.com/v1/chat/completions";
         private String model = "gpt-4o";
+    }
+
+    @Data
+    public static class OpenRouter {
+        private String apiKey = "";
+        private String apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+        private String model = "google/gemma-4-26b-a4b-it:free";
     }
 
     @Data

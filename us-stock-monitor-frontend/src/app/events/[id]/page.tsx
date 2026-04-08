@@ -75,7 +75,7 @@ export default function EventDetailPage() {
               {getCategoryLabel(event.category)}
             </span>
             <span className="rounded bg-gray-800 px-2 py-0.5 text-xs text-gray-300">
-              {sent?.label ?? event.sentiment ?? '未知'}
+              {sent?.label ?? (event.isVerified ? '中性' : '分析中')}
             </span>
             {event.isVerified ? (
               <span className="inline-flex items-center gap-1 text-xs text-indigo-400">
@@ -93,8 +93,8 @@ export default function EventDetailPage() {
               <dd className="font-mono text-gray-200">{formatDate(event.eventDate)}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">来源</dt>
-              <dd className="text-gray-200">{event.sourceName}</dd>
+              <dt className="text-gray-500">主要来源</dt>
+              <dd className="text-gray-200">{event.sources?.[0]?.name || event.sourceName || '未知'}</dd>
             </div>
             <div>
               <dt className="text-gray-500">可信度</dt>
@@ -104,20 +104,40 @@ export default function EventDetailPage() {
               <dt className="text-gray-500">影响力</dt>
               <dd className="text-gray-200">{event.impactScore ?? '--'}</dd>
             </div>
-            <div className="sm:col-span-2">
-              <dt className="text-gray-500">原文链接</dt>
-              <dd>
-                <a
-                  href={event.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-indigo-400 hover:underline"
-                >
-                  {event.sourceUrl}
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </dd>
-            </div>
+            {event.sources && event.sources.length > 0 ? (
+              <div className="sm:col-span-2">
+                <dt className="text-gray-500 mb-2">信息来源 ({event.sources.length})</dt>
+                <dd className="grid gap-2 sm:grid-cols-2">
+                  {event.sources.map((src, i) => (
+                    <a
+                      key={i}
+                      href={src.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 rounded-lg border border-gray-800 bg-gray-950/50 p-2 text-indigo-400 hover:border-indigo-500/50 hover:bg-gray-800/50 transition"
+                    >
+                      <span className="truncate flex-1">{src.name}</span>
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                    </a>
+                  ))}
+                </dd>
+              </div>
+            ) : (
+              <div className="sm:col-span-2">
+                <dt className="text-gray-500">原文链接</dt>
+                <dd>
+                  <a
+                    href={event.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-indigo-400 hover:underline"
+                  >
+                    {event.sourceUrl}
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </dd>
+              </div>
+            )}
           </dl>
 
           <div className="mt-8 border-t border-gray-800 pt-6">

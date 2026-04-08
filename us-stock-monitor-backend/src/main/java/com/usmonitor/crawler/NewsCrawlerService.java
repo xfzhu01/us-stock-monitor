@@ -21,6 +21,7 @@ public class NewsCrawlerService {
     private final RssFeedCrawler rssFeedCrawler;
     private final EventRepository eventRepository;
     private final CrawlLogRepository crawlLogRepository;
+    private final com.usmonitor.service.AiAnalysisService aiAnalysisService;
 
     @Transactional
     public CrawlLog crawlAll() {
@@ -41,6 +42,8 @@ public class NewsCrawlerService {
                 dup++;
                 continue;
             }
+            // Add AI analysis
+            aiAnalysisService.verifyEvent(e);
             toSave.add(e);
         }
         if (!toSave.isEmpty()) {

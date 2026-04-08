@@ -7,9 +7,11 @@ import { ProbabilityChart } from '@/components/analysis/ProbabilityChart';
 import { SignalBadge } from '@/components/dashboard/SignalBadge';
 import { TrendGauge } from '@/components/dashboard/TrendGauge';
 import { useDashboard } from '@/hooks/useDashboard';
+import { useMarketQuotes } from '@/hooks/useMarketQuotes';
 
 export default function DashboardPage() {
   const { data, error, isLoading } = useDashboard();
+  const { data: marketQuotes } = useMarketQuotes();
 
   if (error) {
     return (
@@ -61,38 +63,41 @@ export default function DashboardPage() {
                 )}
               </div>
               <div className="grid grid-cols-2 gap-3 lg:col-span-4 lg:grid-cols-5">
-                {market ? (
+                {market || marketQuotes ? (
                   <>
                     <MarketSnapshot
                       name="S&P 500"
-                      subtitle="SPX"
-                      value={market.spxClose}
-                      changePct={market.spxChangePct}
+                      subtitle="SPY"
+                      value={marketQuotes?.spx?.regularMarketPrice ?? market?.spxClose}
+                      changePct={marketQuotes?.spx?.regularMarketChangePercent ?? market?.spxChangePct}
                       format="index"
                     />
                     <MarketSnapshot
                       name="纳斯达克 100"
-                      subtitle="NDX"
-                      value={market.ndxClose}
-                      changePct={market.ndxChangePct}
+                      subtitle="QQQ"
+                      value={marketQuotes?.ndx?.regularMarketPrice ?? market?.ndxClose}
+                      changePct={marketQuotes?.ndx?.regularMarketChangePercent ?? market?.ndxChangePct}
                       format="index"
                     />
                     <MarketSnapshot
                       name="VIX"
-                      value={market.vixClose}
-                      changePct={0}
+                      subtitle="VIXY"
+                      value={marketQuotes?.vix?.regularMarketPrice ?? market?.vixClose}
+                      changePct={marketQuotes?.vix?.regularMarketChangePercent ?? 0}
                       format="index"
                     />
                     <MarketSnapshot
                       name="美国 10Y"
-                      value={market.us10yYield}
-                      changePct={0}
-                      format="yield"
+                      subtitle="TLT"
+                      value={marketQuotes?.us10y?.regularMarketPrice ?? market?.us10yYield}
+                      changePct={marketQuotes?.us10y?.regularMarketChangePercent ?? 0}
+                      format="index"
                     />
                     <MarketSnapshot
                       name="DXY"
-                      value={market.dxy}
-                      changePct={0}
+                      subtitle="UUP"
+                      value={marketQuotes?.dxy?.regularMarketPrice ?? market?.dxy}
+                      changePct={marketQuotes?.dxy?.regularMarketChangePercent ?? 0}
                       format="index"
                     />
                   </>

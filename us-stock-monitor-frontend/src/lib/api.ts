@@ -1,15 +1,42 @@
-import axios, { type AxiosError } from 'axios';
+import axios, { AxiosHeaders, type AxiosError } from 'axios';
 
 import type { AnalysisVO } from '@/types/analysis';
+import type { AiConfigUpdatePayload, AiConfigVO } from '@/types/ai';
 import type { ApiResult, DashboardVO, PageResult } from '@/types/api';
 import type { EventVO } from '@/types/event';
 import type { FundPositionVO } from '@/types/fund';
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
 
+const USER_ID_STORAGE_KEY = 'us-stock-monitor-user-id';
+
+function getBrowserUserId(): string {
+  if (typeof window === 'undefined') {
+    return 'default';
+  }
+  const existing = window.localStorage.getItem(USER_ID_STORAGE_KEY);
+  if (existing) {
+    return existing;
+  }
+  const generated =
+    window.crypto?.randomUUID?.() ??
+    `browser-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  window.localStorage.setItem(USER_ID_STORAGE_KEY, generated);
+  return generated;
+}
+
 export const apiClient = axios.create({
   baseURL,
   headers: { 'Content-Type': 'application/json' },
   timeout: 30000,
+});
+
+apiClient.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const headers = AxiosHeaders.from(config.headers);
+    headers.set('X-User-Id', getBrowserUserId());
+    config.headers = headers;
+  }
+  return config;
 });
 
 apiClient.interceptors.response.use(
@@ -127,4 +154,16 @@ export async function triggerFundCrawl(): Promise<Record<string, unknown>> {
 export async function triggerAnalysis(): Promise<string> {
   const { data } = await apiClient.post<string>('/api/v1/crawl/analysis');
   return data as string;
+}
+
+export async function fetchAiConfig(): Promise<AiConfigVO> {
+  const { data } = await apiClient.get<AiConfigVO>('/api/v1/ai/config');
+  return data as AiConfigVO;
+}
+
+export async function updateAiConfig(
+  payload: AiConfigUpdatePayload
+): Promise<AiConfigVO> {
+  const { data } = await apiClient.put<AiConfigVO>('/api/v1/ai/config', payload);
+  return data as AiConfigVO;
 }
